@@ -83,6 +83,7 @@ dependencies {
     implementation(Libraries.MULTIDEX)
 
     implementation(Libraries.GMAPS)
+    implementation(Libraries.DEXTER)
 
     annotationProcessor(Libraries.DAGGER_ANDROID_PROCESSOR)
     annotationProcessor(Libraries.DAGGER_COMPILER)

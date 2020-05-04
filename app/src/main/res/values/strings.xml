@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Te Ajudo</string>
+    <string name="requestPermission">Para utilizar o Te Ajude precisamos da permissão para utilizar a localização do seu celular</string>
 </resources>

@@ -10,6 +10,7 @@ object Versions {
     const val MULTIDEX = "1.0.3"
     const val BUILDTOOLVERSION = "3.3.2"
     const val ANDROIDX_LEGACY = "1.0.0"
+    const val DEXTER = "6.1.0"
 
     object Firebase {
         const val CORE = "17.2.2"

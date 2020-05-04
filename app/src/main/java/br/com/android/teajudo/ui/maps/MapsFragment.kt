@@ -1,5 +1,6 @@
 package br.com.android.teajudo.ui.maps
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +18,11 @@ import javax.inject.Inject
 class MapsFragment: BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MapsViewModel
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    private val viewModel by lazy {
+        ViewModelProvider(requireActivity(), viewModelFactory).get(
+            MapsViewModel::class.java
+        )
     }
 
     override fun onCreateView(
@@ -33,13 +33,15 @@ class MapsFragment: BaseFragment() {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
+    private val callback = OnMapReadyCallback { googleMap ->
+        val sydney = LatLng(-34.0, 151.0)
+        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-    }
-
-    private fun configureViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MapsViewModel::class.java)
     }
 }

@@ -1,6 +1,7 @@
 package br.android.iddog.di.module
 
 import br.com.android.teajudo.ui.maps.MapsActivity
+import br.com.android.teajudo.ui.permissionRequests.PermissionRequestsActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -13,6 +14,10 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivityModule {
+
+    @ContributesAndroidInjector(modules = arrayOf(FragmentModule::class))
+    internal abstract fun contributePermissionRequestsActivity(): PermissionRequestsActivity
+
     @ContributesAndroidInjector(modules = arrayOf(FragmentModule::class))
     internal abstract fun contributeMapsActivity(): MapsActivity
 }

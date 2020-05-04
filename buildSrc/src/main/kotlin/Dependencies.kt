@@ -48,11 +48,10 @@ object Libraries {
     const val RXJAVA                        = "io.reactivex.rxjava2:rxjava:${Versions.RX.RXJAVA}"
     const val RXANDROID                     = "io.reactivex.rxjava2:rxandroid:${Versions.RX.RXANDROID}"
     const val RXJAVA_ADAPTER                = "com.squareup.retrofit2:adapter-rxjava2:${Versions.RX.RXJAVA_ADAPTER}"
-
     const val MULTIDEX                      = "com.android.support:multidex:${Versions.MULTIDEX}"
     const val ANDROIDX_LEGACY               = "androidx.legacy:legacy-support-v4:${Versions.ANDROIDX_LEGACY}"
-
     const val GMAPS                         = "com.google.android.gms:play-services-maps:${Versions.GoogleMaps.MAPS}"
+    const val DEXTER                        = "com.karumi:dexter:${Versions.DEXTER}"
 }
 
 object TestLibraries {
