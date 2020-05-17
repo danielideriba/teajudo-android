@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import br.com.android.teajudo.BaseActivity
 import br.com.android.teajudo.R
-import br.com.android.teajudo.ui.maps.utils.setupMapsPermissions
 
 
 class MapsActivity : BaseActivity() {
@@ -14,7 +13,6 @@ class MapsActivity : BaseActivity() {
         setContentView(R.layout.activity_maps)
 
         this.showLoginFragment(savedInstanceState)
-        setupMapsPermissions(this)
     }
 
     private fun showLoginFragment(savedInstanceState: Bundle?) {

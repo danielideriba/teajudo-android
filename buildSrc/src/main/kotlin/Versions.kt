@@ -11,6 +11,8 @@ object Versions {
     const val BUILDTOOLVERSION = "3.3.2"
     const val ANDROIDX_LEGACY = "1.0.0"
     const val DEXTER = "6.1.0"
+    const val LOTTIE = "3.4.0"
+    const val CONNECTIVITY_MODULE = "1.11"
 
     object Firebase {
         const val CORE = "17.2.2"

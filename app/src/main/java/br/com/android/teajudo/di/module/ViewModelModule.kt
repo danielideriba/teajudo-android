@@ -1,4 +1,4 @@
-package br.android.iddog.di.module
+package br.android.teajudo.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

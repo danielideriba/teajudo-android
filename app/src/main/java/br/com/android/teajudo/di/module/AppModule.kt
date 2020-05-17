@@ -1,4 +1,4 @@
-package br.android.iddog.di.module
+package br.android.teajudo.di.module
 
 import dagger.Module
 import dagger.Provides

@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
+val baseUrlDev: String by project
+val baseUrlPrd: String by project
+
 plugins {
     id(BuildPlugins.androidApplication)
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinAndroidExtensions)
     id(BuildPlugins.kapt)
-//    id(BuildPlugins.firebaseService)
 }
 
 android {
@@ -27,12 +29,24 @@ android {
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = false
-            buildConfigField("String", "API_URL", "\"https://teajudo.me/api\"")
+            isDebuggable = true
         }
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            buildConfigField("String", "API_URL", "\"https://teajudo.me/api\"")
+        }
+    }
+
+    flavorDimensions("api")
+
+    productFlavors {
+        create("dev") {
+            buildConfigField("String", "API_URL", "\"$baseUrlDev\"")
+            setDimension("api")
+        }
+        create("prd") {
+            buildConfigField("String", "API_URL", "\"$baseUrlPrd\"")
+            setDimension("api")
         }
     }
 
@@ -84,6 +98,11 @@ dependencies {
 
     implementation(Libraries.GMAPS)
     implementation(Libraries.DEXTER)
+
+    implementation(Libraries.LOTTIE)
+
+//    implementation(project(":verifyConnectivityModule"))
+    implementation(Libraries.CONNECTIVITY_MODULE)
 
     annotationProcessor(Libraries.DAGGER_ANDROID_PROCESSOR)
     annotationProcessor(Libraries.DAGGER_COMPILER)

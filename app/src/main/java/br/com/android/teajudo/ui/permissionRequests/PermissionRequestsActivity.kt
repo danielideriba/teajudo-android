@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import br.com.android.teajudo.BaseActivity
 import br.com.android.teajudo.R
 import br.com.android.teajudo.ui.maps.MapsActivity
@@ -16,7 +17,6 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import timber.log.Timber
 
 
 class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
@@ -27,13 +27,19 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
+    companion object {
+        fun start(context: Context) {
+            val intent = Intent(context, PermissionRequestsActivity::class.java)
+            ContextCompat.startActivity(context, intent, null)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission)
 
         this.showLoginFragment(savedInstanceState)
         this.setupPermissions()
-
     }
 
     private fun showLoginFragment(savedInstanceState: Bundle?) {
@@ -57,13 +63,6 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
     }
 
     override fun onBackPressed() { }
-
-    companion object {
-        fun newIntent(context: Context): Intent {
-            val intent = Intent(context, PermissionRequestsActivity::class.java)
-            return intent
-        }
-    }
 
     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
         report?.let {

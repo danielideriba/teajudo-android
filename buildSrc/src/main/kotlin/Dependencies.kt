@@ -10,6 +10,7 @@ object BuildPlugins {
     const val kotlinAndroidExtensions   = "kotlin-android-extensions"
     const val kapt                      = "kotlin-kapt"
     const val firebaseService           = "com.google.gms:google-services:${Versions.Firebase.SERVICE}"
+//    const val environment               = "${rootProject.projectDir}/brands.gradle"
 }
 
 object AndroidSdk {
@@ -40,7 +41,7 @@ object Libraries {
     const val ANDROID_LIFECYCLE_EX          = "androidx.lifecycle:lifecycle-extensions:${Versions.Androidx.LIFECYCLE}"
     const val ANDROID_LIFECYCLE_LIVEDATA    = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.Androidx.LIFECYCLE}"
     const val STETHO                        = "com.facebook.stetho:stetho:${Versions.STETHO}"
-    const val STETHO_OKHTTP                 =  "com.facebook.stetho:stetho-okhttp3:${Versions.STETHO}"
+    const val STETHO_OKHTTP                 = "com.facebook.stetho:stetho-okhttp3:${Versions.STETHO}"
     const val GLIDE                         = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_ANNOTATION              = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val GLIDE_OKHTTP3                 = "com.github.bumptech.glide:okhttp3-integration:${Versions.GLIDE}"
@@ -52,6 +53,9 @@ object Libraries {
     const val ANDROIDX_LEGACY               = "androidx.legacy:legacy-support-v4:${Versions.ANDROIDX_LEGACY}"
     const val GMAPS                         = "com.google.android.gms:play-services-maps:${Versions.GoogleMaps.MAPS}"
     const val DEXTER                        = "com.karumi:dexter:${Versions.DEXTER}"
+    const val LOTTIE                        = "com.airbnb.android:lottie:${Versions.LOTTIE}"
+    const val CONNECTIVITY_MODULE           = "com.github.danielideriba:VerifyConnectivityModule:${Versions.CONNECTIVITY_MODULE}"
+
 }
 
 object TestLibraries {
