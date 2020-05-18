@@ -101,7 +101,6 @@ dependencies {
 
     implementation(Libraries.LOTTIE)
 
-//    implementation(project(":verifyConnectivityModule"))
     implementation(Libraries.CONNECTIVITY_MODULE)
 
     annotationProcessor(Libraries.DAGGER_ANDROID_PROCESSOR)
@@ -109,6 +108,7 @@ dependencies {
     annotationProcessor(Libraries.GLIDE_ANNOTATION)
 
     testImplementation(TestLibraries.JUNIT4)
+    testImplementation(TestLibraries.MOCKK)
     androidTestImplementation(TestLibraries.TESTRUNNER)
     androidTestImplementation(TestLibraries.ESPRESSO)
 }

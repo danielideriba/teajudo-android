@@ -12,4 +12,17 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.TextView">
+        <item name="android:textSize">@dimen/font_18</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AppTheme.ButtonAllowPermissions">
+        <item name="android:background">@color/blue_23384F</item>
+        <item name="android:color">@color/white_ffffff</item>
+        <item name="android:textSize">@dimen/font_20</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
 </resources>

@@ -12,16 +12,19 @@ import androidx.core.content.ContextCompat
 import br.com.android.teajudo.BaseActivity
 import br.com.android.teajudo.R
 import br.com.android.teajudo.ui.maps.MapsActivity
+import br.com.android.teajudo.utils.Constants.REQUEST_APP_SETTINGS
+import br.com.android.teajudo.utils.Constants.SHARED_KEY
+import br.com.android.teajudo.utils.SharedPreferencesUtils
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.android.synthetic.main.activity_permission.*
+import timber.log.Timber
 
 
 class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
-    private val REQUEST_APP_SETTINGS = 168
-
     private val requiredPermissions = listOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
@@ -38,16 +41,16 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission)
 
-        this.showLoginFragment(savedInstanceState)
-        this.setupPermissions()
+        settingActions()
     }
 
-    private fun showLoginFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            val fragment = PermissionRequestFragment()
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment, null)
-                .commit()
+    private fun settingActions(){
+        allowPermissions.setOnClickListener {
+            if(SharedPreferencesUtils.getBooleanPreference(this, SHARED_KEY, false)) {
+                MapsActivity.start(this)
+            } else {
+                setupPermissions()
+            }
         }
     }
 
@@ -67,9 +70,8 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
         report?.let {
             if(report.areAllPermissionsGranted()){
-                val intent = MapsActivity.newIntent(this)
-                startActivity(intent)
-                finish()
+                SharedPreferencesUtils.setBooleanPreference(this, SHARED_KEY, true)
+                MapsActivity.start(this)
             }
 
             if (report.grantedPermissionResponses.size == 0){
@@ -96,8 +98,9 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_APP_SETTINGS) {
             if (hasPermissions(this, requiredPermissions)) {
-                val intent = MapsActivity.newIntent(this)
-                startActivity(intent)
+                SharedPreferencesUtils.setBooleanPreference(this, SHARED_KEY, true)
+
+                MapsActivity.start(this)
                 finish()
             } else {
                 this.goToSettings()

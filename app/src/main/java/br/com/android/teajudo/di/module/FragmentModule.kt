@@ -1,8 +1,6 @@
 package br.android.teajudo.di.module
 
-import android.webkit.PermissionRequest
 import br.com.android.teajudo.ui.maps.MapsFragment
-import br.com.android.teajudo.ui.permissionRequests.PermissionRequestFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -15,9 +13,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentModule {
-
-    @ContributesAndroidInjector
-    abstract fun contributePermissionRequestFragment(): PermissionRequestFragment
 
     @ContributesAndroidInjector
     abstract fun contributeMapsFragment(): MapsFragment

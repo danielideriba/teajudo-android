@@ -6,7 +6,10 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.android.teajudo.R
+import br.com.android.teajudo.ui.maps.MapsActivity
 import br.com.android.teajudo.ui.permissionRequests.PermissionRequestsActivity
+import br.com.android.teajudo.utils.Constants.SHARED_KEY
+import br.com.android.teajudo.utils.SharedPreferencesUtils
 import com.module.verifyconnectivitymodule.receivers.ConnectivityReceiver
 import com.module.verifyconnectivitymodule.ui.WarningScreenActivity
 import timber.log.Timber
@@ -43,7 +46,11 @@ class LauncherActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityR
             WarningScreenActivity.start(this)
         } else {
             Timber.d("You are online now.")
-            PermissionRequestsActivity.start(this)
+            if(SharedPreferencesUtils.getBooleanPreference(this, SHARED_KEY, false)){
+                MapsActivity.start(this)
+            } else {
+                PermissionRequestsActivity.start(this)
+            }
         }
     }
 }

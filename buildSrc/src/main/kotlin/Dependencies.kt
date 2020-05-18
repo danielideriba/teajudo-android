@@ -10,7 +10,6 @@ object BuildPlugins {
     const val kotlinAndroidExtensions   = "kotlin-android-extensions"
     const val kapt                      = "kotlin-kapt"
     const val firebaseService           = "com.google.gms:google-services:${Versions.Firebase.SERVICE}"
-//    const val environment               = "${rootProject.projectDir}/brands.gradle"
 }
 
 object AndroidSdk {
@@ -55,11 +54,11 @@ object Libraries {
     const val DEXTER                        = "com.karumi:dexter:${Versions.DEXTER}"
     const val LOTTIE                        = "com.airbnb.android:lottie:${Versions.LOTTIE}"
     const val CONNECTIVITY_MODULE           = "com.github.danielideriba:VerifyConnectivityModule:${Versions.CONNECTIVITY_MODULE}"
-
 }
 
 object TestLibraries {
-    const val JUNIT4 = "junit:junit:${Versions.Tests.JUNIT4}"
-    const val TESTRUNNER = "androidx.test:runner:${Versions.Tests.TESTRUNNER}"
-    const val ESPRESSO = "androidx.test.espresso:espresso-core:${Versions.Tests.ESPRESSO}"
+    const val JUNIT4                        = "junit:junit:${Versions.Tests.JUNIT4}"
+    const val TESTRUNNER                    = "androidx.test:runner:${Versions.Tests.TESTRUNNER}"
+    const val ESPRESSO                      = "androidx.test.espresso:espresso-core:${Versions.Tests.ESPRESSO}"
+    const val MOCKK                         = "io.mockk:mockk:${Versions.Tests.MOCKK}"
 }

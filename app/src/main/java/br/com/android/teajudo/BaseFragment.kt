@@ -10,10 +10,4 @@ open class BaseFragment: Fragment(){
         super.onActivityCreated(savedInstanceState)
         AndroidSupportInjection.inject(this)
     }
-
-    fun goToHome() {
-        val intent = MapsActivity.newIntent(view!!.context)
-        startActivity(intent)
-        activity!!.finish()
-    }
 }
