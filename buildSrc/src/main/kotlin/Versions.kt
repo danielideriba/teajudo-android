@@ -44,6 +44,11 @@ object Versions {
         const val TESTRUNNER = "1.1.0-alpha4"
         const val ESPRESSO = "3.1.0-alpha4"
         const val MOCKK = "1.10.0"
+        const val JETPACK_NAVIGATION_TEST = "2.3.0-alpha06"
+    }
+
+    object Jetpack {
+        const val JETPACK_NAVIGATION = "2.3.0-alpha06"
     }
 }
 

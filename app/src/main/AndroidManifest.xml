@@ -31,7 +31,10 @@
         </activity>
 
         <activity android:name=".ui.permissionRequests.PermissionRequestsActivity" />
-        <activity android:name=".ui.maps.MapsActivity" />
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.maps.MapsActivity">
+        </activity>
     </application>
 
 </manifest>

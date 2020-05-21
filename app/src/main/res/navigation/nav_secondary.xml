@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_secondary"
+    app:startDestination="@id/bottomNavFragmentOne">
+
+    <fragment
+        android:id="@+id/bottomNavFragmentOne"
+        android:name="br.com.android.teajudo.ui.maps.MapsFragment" />
+
+    <fragment
+        android:id="@+id/bottomNavFragmentTwo"
+        android:name="br.com.android.teajudo.ui.navigation.BottomNavFragmentTwo" />
+
+    <fragment
+        android:id="@+id/bottomNavFragmentThree"
+        android:name="br.com.android.teajudo.ui.navigation.BottomNavFragmentThree"
+        tools:layout="@layout/fragment_bottom_nav_fragment_three"/>
+
+    <fragment
+        android:id="@+id/bottomNavFragmentFour"
+        android:name="br.com.android.teajudo.ui.navigation.BottomNavFragmentThree"
+        tools:layout="@layout/fragment_bottom_nav_fragment_three"/>
+
+</navigation>

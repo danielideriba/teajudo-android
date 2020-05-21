@@ -42,10 +42,8 @@ class LauncherActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityR
 
     private fun showMessage(isConnected: Boolean) {
         if (!isConnected) {
-            Timber.d("You are offline now.")
             WarningScreenActivity.start(this)
         } else {
-            Timber.d("You are online now.")
             if(SharedPreferencesUtils.getBooleanPreference(this, SHARED_KEY, false)){
                 MapsActivity.start(this)
             } else {

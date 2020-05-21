@@ -8,6 +8,7 @@ plugins {
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinAndroidExtensions)
     id(BuildPlugins.kapt)
+    id(BuildPlugins.navigationSafeArgs)
 }
 
 android {
@@ -101,7 +102,13 @@ dependencies {
 
     implementation(Libraries.LOTTIE)
 
+    //Custom Libraries
     implementation(Libraries.CONNECTIVITY_MODULE)
+
+    //JetPack
+    implementation(Libraries.JETPACK_NAVIGATION)
+    implementation(Libraries.JETPACK_NAVIGATION_UI)
+    implementation(Libraries.JETPACK_FRAGMENT_NAVIGATION)
 
     annotationProcessor(Libraries.DAGGER_ANDROID_PROCESSOR)
     annotationProcessor(Libraries.DAGGER_COMPILER)
@@ -111,6 +118,7 @@ dependencies {
     testImplementation(TestLibraries.MOCKK)
     androidTestImplementation(TestLibraries.TESTRUNNER)
     androidTestImplementation(TestLibraries.ESPRESSO)
+    androidTestImplementation(TestLibraries.JETPACK_NAVIGATION_TEST)
 }
 
 //apply(mapOf("plugin" to "com.google.gms.google-services"))

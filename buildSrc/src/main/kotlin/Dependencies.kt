@@ -9,6 +9,7 @@ object BuildPlugins {
     const val kotlinAndroid             = "kotlin-android"
     const val kotlinAndroidExtensions   = "kotlin-android-extensions"
     const val kapt                      = "kotlin-kapt"
+    const val navigationSafeArgs        = "androidx.navigation.safeargs.kotlin"
     const val firebaseService           = "com.google.gms:google-services:${Versions.Firebase.SERVICE}"
 }
 
@@ -54,6 +55,10 @@ object Libraries {
     const val DEXTER                        = "com.karumi:dexter:${Versions.DEXTER}"
     const val LOTTIE                        = "com.airbnb.android:lottie:${Versions.LOTTIE}"
     const val CONNECTIVITY_MODULE           = "com.github.danielideriba:VerifyConnectivityModule:${Versions.CONNECTIVITY_MODULE}"
+
+    const val JETPACK_NAVIGATION            = "android.arch.navigation:navigation-fragment-ktx:${Versions.Jetpack.JETPACK_NAVIGATION}"
+    const val JETPACK_NAVIGATION_UI         = "androidx.navigation:navigation-ui-ktx:${Versions.Jetpack.JETPACK_NAVIGATION}"
+    const val JETPACK_FRAGMENT_NAVIGATION   = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.Jetpack.JETPACK_NAVIGATION}"
 }
 
 object TestLibraries {
@@ -61,4 +66,5 @@ object TestLibraries {
     const val TESTRUNNER                    = "androidx.test:runner:${Versions.Tests.TESTRUNNER}"
     const val ESPRESSO                      = "androidx.test.espresso:espresso-core:${Versions.Tests.ESPRESSO}"
     const val MOCKK                         = "io.mockk:mockk:${Versions.Tests.MOCKK}"
+    const val JETPACK_NAVIGATION_TEST       = "androidx.navigation:navigation-testing:${Versions.Tests.JETPACK_NAVIGATION_TEST}"
 }

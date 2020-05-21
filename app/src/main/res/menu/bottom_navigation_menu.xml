@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottomNavFragmentOne"
+        android:icon="@drawable/ic_maps_button_states"
+        android:title="@string/maps_tab"/>
+    <item
+        android:id="@+id/bottomNavFragmentTwo"
+        android:icon="@drawable/ic_shopping_button_state"
+        android:title="@string/local_business_tab" />
+    <item
+        android:id="@+id/bottomNavFragmentThree"
+        android:icon="@drawable/ic_volunteer_button_state"
+        android:title="@string/volunteers_tab" />
+
+    <item
+        android:id="@+id/bottomNavFragmentFour"
+        android:icon="@drawable/ic_request_button_state"
+        android:title="@string/requests_tab"/>
+
+</menu>

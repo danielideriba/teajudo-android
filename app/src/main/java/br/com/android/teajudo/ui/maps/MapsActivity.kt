@@ -3,9 +3,15 @@ package br.com.android.teajudo.ui.maps
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import br.com.android.teajudo.BaseActivity
 import br.com.android.teajudo.R
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_maps.*
 
 
 class MapsActivity : BaseActivity() {
@@ -13,17 +19,17 @@ class MapsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
-         this.showLoginFragment(savedInstanceState)
+        val navController = findNavController(R.id.nav_host_main)
+
+        setSupportActionBar(toolbar)
+
+        NavigationUI.setupActionBarWithNavController(this, navController)
+
+        val bottomNavigationView = findViewById<NavigationView>(R.id.nav_view)
+        bottomNavigationView.setupWithNavController(navController)
     }
 
-    private fun showLoginFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            val fragment = MapsFragment()
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment, null)
-                .commit()
-        }
-    }
+    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_main).navigateUp()
 
     override fun onBackPressed() { }
 
