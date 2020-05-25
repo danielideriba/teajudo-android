@@ -1,8 +1,11 @@
 package br.com.android.teajudo.di.components
 
 import android.app.Application
-import br.android.teajudo.di.module.*
+import br.android.teajudo.di.module.AppModule
 import br.com.android.teajudo.App
+import br.com.android.teajudo.di.module.TeAjudoModule
+import com.module.coreapps.di.modules.CoreModule
+import com.module.networkmodule.di.NetworkModule
 import com.module.verifyconnectivitymodule.di.module.VerifyConnectivityModule
 import dagger.BindsInstance
 import dagger.Component
@@ -13,11 +16,10 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidSupportInjectionModule::class,
-        ActivityModule::class,
-        FragmentModule::class,
-        NetModule::class,
-        ViewModelModule::class,
-        RepositoryModule::class,
+        AppModule::class,
+        TeAjudoModule::class,
+        CoreModule::class,
+        NetworkModule::class,
         VerifyConnectivityModule::class
     ]
 )

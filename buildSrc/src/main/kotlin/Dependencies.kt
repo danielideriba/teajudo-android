@@ -59,6 +59,18 @@ object Libraries {
     const val JETPACK_NAVIGATION            = "android.arch.navigation:navigation-fragment-ktx:${Versions.Jetpack.JETPACK_NAVIGATION}"
     const val JETPACK_NAVIGATION_UI         = "androidx.navigation:navigation-ui-ktx:${Versions.Jetpack.JETPACK_NAVIGATION}"
     const val JETPACK_FRAGMENT_NAVIGATION   = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.Jetpack.JETPACK_NAVIGATION}"
+
+    //Room
+    const val ROOM_RUNTIME                  = "androidx.room:room-runtime:${Versions.Room.ROOM}"
+    const val ROOM_COMPILER_KAPT            = "androidx.room:room-compiler:${Versions.Room.ROOM}"
+    const val ROOM_KTX                      = "androidx.room:room-ktx:${Versions.Room.ROOM}"
+    const val ROOM_RXJAVA                   = "androidx.room:room-rxjava2:${Versions.Room.ROOM}"
+
+    //arch-comp Room
+    const val ARCH_EXTENSION                = "android.arch.lifecycle:extensions:${Versions.Room.ROOM_ARCH}"
+    const val ARCH_COMMON                   = "android.arch.lifecycle:common-java8:${Versions.Room.ROOM_ARCH}"
+    const val ARCH_PERSISTENCE              = "android.arch.persistence.room:runtime:${Versions.Room.ROOM_ARCH}"
+    const val ARCH_PERSISTENCE_KAPT         = "android.arch.persistence.room:compiler:${Versions.Room.ROOM_ARCH}"
 }
 
 object TestLibraries {

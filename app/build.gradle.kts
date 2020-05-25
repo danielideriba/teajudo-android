@@ -1,8 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
-val baseUrlDev: String by project
-val baseUrlPrd: String by project
-
 plugins {
     id(BuildPlugins.androidApplication)
     id(BuildPlugins.kotlinAndroid)
@@ -42,12 +39,12 @@ android {
 
     productFlavors {
         create("dev") {
-            buildConfigField("String", "API_URL", "\"$baseUrlDev\"")
             setDimension("api")
+            matchingFallbacks = listOf("dev")
         }
         create("prd") {
-            buildConfigField("String", "API_URL", "\"$baseUrlPrd\"")
             setDimension("api")
+            matchingFallbacks = listOf("prd")
         }
     }
 
@@ -109,6 +106,20 @@ dependencies {
     implementation(Libraries.JETPACK_NAVIGATION)
     implementation(Libraries.JETPACK_NAVIGATION_UI)
     implementation(Libraries.JETPACK_FRAGMENT_NAVIGATION)
+
+    //Room
+    implementation(Libraries.ROOM_RUNTIME)
+    implementation(Libraries.ROOM_KTX)
+    implementation(Libraries.ROOM_RXJAVA)
+    kapt(Libraries.ROOM_COMPILER_KAPT)
+
+    implementation(Libraries.ARCH_COMMON)
+    implementation(Libraries.ARCH_EXTENSION)
+    implementation(Libraries.ARCH_PERSISTENCE)
+    kapt(Libraries.ARCH_PERSISTENCE_KAPT)
+
+    implementation(project(":networkmodule"))
+    implementation(project(":coreapps"))
 
     annotationProcessor(Libraries.DAGGER_ANDROID_PROCESSOR)
     annotationProcessor(Libraries.DAGGER_COMPILER)

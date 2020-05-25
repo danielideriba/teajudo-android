@@ -35,6 +35,18 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.maps.MapsActivity">
         </activity>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.business.BusinessActivity">
+        </activity>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.volunteers.VolunteersActivity">
+        </activity>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.helpingHand.HelpingHandActivity">
+        </activity>
     </application>
 
 </manifest>

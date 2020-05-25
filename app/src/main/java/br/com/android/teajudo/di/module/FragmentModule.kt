@@ -1,6 +1,9 @@
 package br.android.teajudo.di.module
 
+import br.com.android.teajudo.ui.business.BusinessFragment
+import br.com.android.teajudo.ui.helpingHand.HelpingHandFragment
 import br.com.android.teajudo.ui.maps.MapsFragment
+import br.com.android.teajudo.ui.volunteers.VolunteersFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -16,4 +19,13 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMapsFragment(): MapsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeBusinessFragment(): BusinessFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeHelpingHandFragment(): HelpingHandFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeHelpingVolunteersFragment(): VolunteersFragment
 }

@@ -11,16 +11,14 @@
 
     <fragment
         android:id="@+id/bottomNavFragmentTwo"
-        android:name="br.com.android.teajudo.ui.navigation.BottomNavFragmentTwo" />
+        android:name="br.com.android.teajudo.ui.business.BusinessFragment" />
 
     <fragment
         android:id="@+id/bottomNavFragmentThree"
-        android:name="br.com.android.teajudo.ui.navigation.BottomNavFragmentThree"
-        tools:layout="@layout/fragment_bottom_nav_fragment_three"/>
+        android:name="br.com.android.teajudo.ui.helpingHand.HelpingHandFragment" />
 
     <fragment
         android:id="@+id/bottomNavFragmentFour"
-        android:name="br.com.android.teajudo.ui.navigation.BottomNavFragmentThree"
-        tools:layout="@layout/fragment_bottom_nav_fragment_three"/>
+        android:name="br.com.android.teajudo.ui.volunteers.VolunteersFragment" />
 
 </navigation>

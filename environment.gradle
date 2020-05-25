@@ -1,0 +1,4 @@
+ext {
+    baseUrls = [dev: 'https://teajudo.me',
+                prd: 'https://teajudo.me']
+}

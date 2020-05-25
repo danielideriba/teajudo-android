@@ -50,5 +50,10 @@ object Versions {
     object Jetpack {
         const val JETPACK_NAVIGATION = "2.3.0-alpha06"
     }
+
+    object Room {
+        const val ROOM = "2.2.5"
+        const val ROOM_ARCH = "1.1.1"
+    }
 }
 
