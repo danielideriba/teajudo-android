@@ -9,9 +9,6 @@ import com.module.coreapps.base.BaseDao
 
 @Dao
 interface StoreDao : BaseDao<StoreEntity> {
-    @Query("SELECT * FROM Store WHERE lat = :lat AND lng = :lng")
-    fun getStoreByLatLng(
-        lat: String,
-        lng: String
-    ): LiveData<StoreEntity>
+    @Query("SELECT * FROM Store")
+    fun getStores(): LiveData<List<StoreEntity>>
 }

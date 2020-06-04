@@ -84,31 +84,31 @@ constructor() {
     }
 
     /**
-     * Chamado para salvar o resultado da API no banco de dados
+     * Called to save the API result to the database
      */
     @WorkerThread
     protected abstract fun saveFetchData(item: RequestType, dbResult: ResultType?)
 
     /**
-     * Chamado quando é obtido os dados do banco de dados para decidir se os dados devem ser requisitados do serviço
+     * Called when data is obtained from the database to decide whether data should be requested from the service
      */
     @MainThread
     protected abstract fun shouldFetch(data: ResultType?): Boolean
 
     /**
-     * Chamado para obter os dados cacheados do banco de dados
+     * Called to get cached data from database
      */
     @MainThread
     protected abstract fun loadFromDb(): LiveData<ResultType>
 
     /**
-     * CHamado para criar a chamada de API
+     * Called to create the API call
      */
     @MainThread
     protected abstract fun fetchService(): LiveData<ApiResponse<RequestType>>
 
     /**
-     * Chamado quando a chamada do serviço falhar. As classes que herdarem talvez precisem resetar a paginaçao, por exemplo
+     * Called when the service call fails. Classes that inherit may need to reset the pagination, for example
      */
     @MainThread
     protected abstract fun onFetchFailed()

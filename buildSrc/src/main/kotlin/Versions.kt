@@ -49,6 +49,7 @@ object Versions {
 
     object Jetpack {
         const val JETPACK_NAVIGATION = "2.3.0-alpha06"
+        const val DATABIND = "3.6.1"
     }
 
     object Room {

@@ -60,6 +60,8 @@ object Libraries {
     const val JETPACK_NAVIGATION_UI         = "androidx.navigation:navigation-ui-ktx:${Versions.Jetpack.JETPACK_NAVIGATION}"
     const val JETPACK_FRAGMENT_NAVIGATION   = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.Jetpack.JETPACK_NAVIGATION}"
 
+    const val DATABINDING                   = "com.android.databinding:compiler:${Versions.Jetpack.DATABIND}"
+
     //Room
     const val ROOM_RUNTIME                  = "androidx.room:room-runtime:${Versions.Room.ROOM}"
     const val ROOM_COMPILER_KAPT            = "androidx.room:room-compiler:${Versions.Room.ROOM}"

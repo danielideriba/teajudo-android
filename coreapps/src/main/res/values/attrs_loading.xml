@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="LoadingIndicator">
+        <attr name="spinnerColor" format="reference" />
+        <attr name="bgColor" format="reference" />
+        <attr name="icon" format="reference" />
+    </declare-styleable>
+</resources>

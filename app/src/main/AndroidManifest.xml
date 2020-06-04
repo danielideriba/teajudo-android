@@ -30,7 +30,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.permissionRequests.PermissionRequestsActivity" />
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.permissionRequests.PermissionRequestsActivity">
+        </activity>
         <activity
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.maps.MapsActivity">

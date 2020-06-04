@@ -11,14 +11,13 @@ import br.com.android.teajudo.data.db.entities.StoreDetailsEntity
 import br.com.android.teajudo.data.db.entities.StoreEntity
 import com.module.coreapps.converters.CoreRoomConverters
 
-
 @Database(
     entities = [
         StoreEntity::class,
         StoreDetailsEntity::class,
         AvailableEntity::class
     ],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 @TypeConverters(CoreRoomConverters::class, TeAjudoRoomConverters::class)

@@ -1,12 +1,14 @@
 package br.com.android.teajudo.data.remote.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Store(
-    val whatsapp: Int = 0,
-    val lng: String = "",
-    val phone: String = "",
-    val name: String = "",
-    val options: StoreDetails,
-    val type: String = "",
-    val email: String = "",
-    val lat: String = ""
+    @SerializedName("whatsapp") val whatsapp: Int = 0,
+    @SerializedName("lng") val lng: String = "",
+    @SerializedName("phone") val phone: String = "",
+    @SerializedName("name") val name: String = "",
+    @SerializedName("options") val options: StoreDetails,
+    @SerializedName("type") val type: String = "",
+    @SerializedName("email") val email: String = "",
+    @SerializedName("lat") val lat: String = ""
 )

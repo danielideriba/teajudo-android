@@ -57,6 +57,9 @@ android {
         val options = this as KotlinJvmOptions
         options.jvmTarget = "1.8"
     }
+
+    viewBinding.isEnabled = true
+    dataBinding.isEnabled = true
 }
 
 dependencies {
@@ -117,6 +120,8 @@ dependencies {
     implementation(Libraries.ARCH_EXTENSION)
     implementation(Libraries.ARCH_PERSISTENCE)
     kapt(Libraries.ARCH_PERSISTENCE_KAPT)
+
+    kapt(Libraries.DATABINDING)
 
     implementation(project(":networkmodule"))
     implementation(project(":coreapps"))

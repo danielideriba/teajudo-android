@@ -8,7 +8,7 @@ import com.module.coreapps.base.BaseDao
 
 @Dao
 interface StoreDetailsDao : BaseDao<StoreDetailsEntity> {
-    @Query("SELECT * FROM StoreDetails WHERE id = :id")
+    @Query("SELECT * FROM StoreDetails WHERE idStoreDetails = :id")
     fun getStoreById(
         id: Int
     ): LiveData<StoreDetailsEntity>

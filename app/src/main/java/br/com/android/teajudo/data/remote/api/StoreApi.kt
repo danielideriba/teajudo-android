@@ -1,4 +1,4 @@
-package br.com.android.teajudo.data.remote
+package br.com.android.teajudo.data.remote.api
 
 import androidx.lifecycle.LiveData
 import br.com.android.teajudo.data.remote.model.StoreRequest

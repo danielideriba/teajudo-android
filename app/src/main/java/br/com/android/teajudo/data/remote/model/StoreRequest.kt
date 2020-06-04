@@ -1,7 +1,9 @@
 package br.com.android.teajudo.data.remote.model
 
+import com.google.gson.annotations.SerializedName
+
 data class StoreRequest(
-    val data: List<Store>?,
-    val message: String = "",
-    val status: Boolean = false
+    @SerializedName("data") val data: List<Store>,
+    @SerializedName("message") val message: String = "",
+    @SerializedName("status") val status: Boolean = false
 )

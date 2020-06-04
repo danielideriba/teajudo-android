@@ -7,7 +7,8 @@ import br.com.android.teajudo.data.db.dao.StoreDetailsDao
 import br.com.android.teajudo.data.db.entities.AvailableEntity
 import br.com.android.teajudo.data.db.entities.StoreDetailsEntity
 import br.com.android.teajudo.data.db.entities.StoreEntity
-import br.com.android.teajudo.data.remote.StoreApi
+import br.com.android.teajudo.data.remote.api.StoreApi
+import br.com.android.teajudo.data.remote.VolunteerType
 import br.com.android.teajudo.data.remote.model.StoreRequest
 import com.module.coreapps.api.ApiResponse
 import com.module.coreapps.api.Resource
@@ -28,55 +29,103 @@ class MapsRepository @Inject constructor(
 ) {
     private val rateLimiter = RateLimiter<String>(1, TimeUnit.HOURS)
 
-    fun getStoreByLatLng(lat: String, lng: String) = dao.getStoreByLatLng(lat, lng)
+    fun getStores(lat: String, lng: String) = dao.getStores()
 
-    fun doStores(lat: String, lng: String, distance: Int): LiveData<Resource<StoreEntity>> {
+    fun doStores(
+        lat: String,
+        lng: String,
+        distance: Int
+    ): LiveData<Resource<List<StoreEntity>>> {
         return object :
-            NetworkBoundResource<StoreEntity, StoreRequest>() {
-            override fun saveFetchData(item: StoreRequest, dbResult: StoreEntity?) {
+            NetworkBoundResource<List<StoreEntity>, StoreRequest>() {
+            override fun saveFetchData(items: StoreRequest, dbResult: List<StoreEntity>?) {
+                if (items.data.isNotEmpty()) {
+                    var item = items.data
+                    for (i in item.indices) {
+                        var emailData =
+                            if (item[i].email.isNullOrBlank()) "" else item[i].email
 
-                if(item.data!!.isNotEmpty()) {
-                    var emailData = if (item.data[0].email.isNullOrBlank()) "" else item.data[0].email
+                        when(item[i].type) {
+                            VolunteerType.STORE.type -> {
+                                item[i].options.available.let {
+                                    val availableEntity = AvailableEntity(
+                                        i,
+                                        it?.others,
+                                        it?.delivery,
+                                        it?.addOthers
+                                    )
+                                    daoAvailable.insert(availableEntity)
+                                }
 
-                    val storeEntity = StoreEntity(
-                        0,
-                        item.data[0].name,
-                        emailData,
-                        item.data[0].phone,
-                        item.data[0].whatsapp,
-                        item.data[0].lat,
-                        item.data[0].lng,
-                        item.data[0].type
-                    )
-                    val storeDetailsEntity = StoreDetailsEntity(
-                        0,
-                        item.data[0].options.owner,
-                        item.data[0].options.veracidade,
-                        item.data[0].options.marketGarden
-                    )
+                                val storeDetailsEntity = StoreDetailsEntity(
+                                    i,
+                                    item[i].options.owner,
+                                    item[i].options.veracidade,
+                                    item[i].options.marketGarden,
+                                    false,
+                                    false,
+                                    false,
+                                    false,
+                                    ""
+                                )
+                                daoDetails.insert(storeDetailsEntity)
+                            }
+                            VolunteerType.VOLUNTEER.type -> {
+                                val storeDetailsEntity = StoreDetailsEntity(
+                                    i,
+                                    "",
+                                    false,
+                                    false,
+                                    item[i].options.food,
+                                    item[i].options.talk,
+                                    item[i].options.market,
+                                    item[i].options.health,
+                                    ""
+                                )
+                                daoDetails.insert(storeDetailsEntity)
+                            }
+                            VolunteerType.USERTYPE.type -> {
+                                val storeDetailsEntity = StoreDetailsEntity(
+                                    i,
+                                    "",
+                                    false,
+                                    false,
+                                    item[i].options.food,
+                                    false,
+                                    item[i].options.market,
+                                    false,
+                                    item[i].options.others
+                                )
+                                daoDetails.insert(storeDetailsEntity)
+                            }
+                        }
 
-                    val availableEntity = AvailableEntity(
-                        0,
-                        item.data[0].options.available.others,
-                        item.data[0].options.available.delivery,
-                        item.data[0].options.available.addOthers
-                    )
+                        val storeEntity = StoreEntity(
+                            i,
+                            item[i].name,
+                            emailData,
+                            item[i].phone,
+                            item[i].whatsapp,
+                            item[i].lat,
+                            item[i].lng,
+                            item[i].type
+                        )
 
-                    dao.insert(storeEntity)
-                    daoDetails.insert(storeDetailsEntity)
-                    daoAvailable.insert(availableEntity)
+                        dao.insert(storeEntity)
+                    }
+
                 }
             }
 
-            override fun shouldFetch(data: StoreEntity?): Boolean {
-                return lat.isNotEmpty() && lng.isNotEmpty() && data.shouldFetch() && rateLimiter.shouldFetch(key)
+            override fun shouldFetch(data: List<StoreEntity>?): Boolean {
+                return true
             }
 
-            override fun loadFromDb(): LiveData<StoreEntity> {
-                return dao.getStoreByLatLng(lat, lng)
+            override fun loadFromDb(): LiveData<List<StoreEntity>> {
+                return dao.getStores()
             }
 
-            override fun fetchService(): LiveData<ApiResponse<StoreRequest>> {
+            override fun fetchService(): LiveData<ApiResponse<StoreRequest>>{
                 return storeApi.getStores(lat, lng, distance)
             }
 
@@ -85,9 +134,7 @@ class MapsRepository @Inject constructor(
             }
 
             override val key: String
-                get() = "$distance"
-
+                get() = "$lat"
         }.asLiveData
-
     }
 }

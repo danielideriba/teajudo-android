@@ -1,6 +1,7 @@
 package com.module.coreapps.base
 
 import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import org.joda.time.DateTimeComparator
 import java.util.*
 
@@ -14,9 +15,11 @@ abstract class BaseEntity {
     open val shouldFetch: Boolean
         get() = isOldData
 
+    @Ignore
     @ColumnInfo(name = "firstSync")
     var firstSync: Date? = null
 
+    @Ignore
     @ColumnInfo(name = "lastSync")
     var lastSync: Date? = null
 

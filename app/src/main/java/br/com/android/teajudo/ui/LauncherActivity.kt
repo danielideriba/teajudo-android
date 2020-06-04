@@ -40,6 +40,11 @@ class LauncherActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityR
         showMessage(isConnected)
     }
 
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(currentBroadcast)
+    }
+
     private fun showMessage(isConnected: Boolean) {
         if (!isConnected) {
             WarningScreenActivity.start(this)

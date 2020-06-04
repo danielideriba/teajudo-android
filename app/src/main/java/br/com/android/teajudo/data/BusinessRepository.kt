@@ -1,6 +1,6 @@
 package br.com.android.teajudo.data
 
-import br.com.android.teajudo.data.remote.StoreApi
+import br.com.android.teajudo.data.remote.api.StoreApi
 import javax.inject.Inject
 import javax.inject.Singleton
 

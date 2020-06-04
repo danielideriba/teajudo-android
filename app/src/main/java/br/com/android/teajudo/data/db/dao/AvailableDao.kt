@@ -8,7 +8,7 @@ import com.module.coreapps.base.BaseDao
 
 @Dao
 interface AvailableDao : BaseDao<AvailableEntity> {
-    @Query("SELECT * FROM Available WHERE id = :id")
+    @Query("SELECT * FROM Available WHERE idAvailable = :id")
     fun getStoreAvailable(
         id: Int
     ): LiveData<AvailableEntity>

@@ -3,7 +3,7 @@ package br.com.android.teajudo.di.module
 import br.android.teajudo.di.module.ActivityModule
 import br.android.teajudo.di.module.FragmentModule
 import br.android.teajudo.di.module.ViewModelModule
-import br.com.android.teajudo.data.remote.StoreApi
+import br.com.android.teajudo.data.remote.api.StoreApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -23,6 +23,7 @@ open class TeAjudoModule {
     @Singleton
     open fun provideStoreApi(
         @Named("networkmodule") retrofit: Retrofit
-    ): StoreApi = retrofit.create(StoreApi::class.java)
+    ): StoreApi = retrofit.create(
+        StoreApi::class.java)
 
 }
