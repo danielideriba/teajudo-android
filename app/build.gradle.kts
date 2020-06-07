@@ -123,6 +123,8 @@ dependencies {
 
     kapt(Libraries.DATABINDING)
 
+    implementation(Libraries.LOCATION_SERVICES)
+
     implementation(project(":networkmodule"))
     implementation(project(":coreapps"))
 

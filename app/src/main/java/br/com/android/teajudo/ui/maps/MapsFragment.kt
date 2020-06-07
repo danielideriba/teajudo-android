@@ -1,12 +1,15 @@
 package br.com.android.teajudo.ui.maps
 
+import android.Manifest
 import android.content.Context
-import android.content.Intent
+import android.content.Context.LOCATION_SERVICE
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +17,8 @@ import br.com.android.teajudo.BaseFragment
 import br.com.android.teajudo.R
 import br.com.android.teajudo.data.db.entities.StoreEntity
 import br.com.android.teajudo.databinding.FragmentMapsBinding
-import br.com.android.teajudo.databinding.StoreMapsBinding
-import com.google.android.gms.maps.CameraUpdateFactory
+import br.com.android.teajudo.utils.ScreenUtils
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -23,12 +26,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.module.coreapps.api.Status
+import com.module.coreapps.utils.DoubleUtils
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_helping.*
 import timber.log.Timber
 import javax.inject.Inject
 
 
-class MapsFragment: BaseFragment(){
+class MapsFragment: BaseFragment(), OnMapReadyCallback {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -39,14 +44,12 @@ class MapsFragment: BaseFragment(){
     }
 
     lateinit var binding: FragmentMapsBinding
+    lateinit var gMaps: GoogleMap
+    lateinit var locationManager : LocationManager
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -64,16 +67,20 @@ class MapsFragment: BaseFragment(){
 
             initView()
 
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+    }
 
-        observeViewModel()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-//        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-//        mapFragment?.getMapAsync(callback)
+        linearLayoutBackground.layoutParams.height = ScreenUtils.getScreenHeightInDP(view.context)
     }
 
     private fun observeViewModel() {
@@ -82,12 +89,9 @@ class MapsFragment: BaseFragment(){
             Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    if (it.data.isNullOrEmpty()){
-//                        this.markersArray = it.data
-
-                        if (this::binding.isInitialized) {
-                            binding.headTitle.text = it.data?.get(0)?.name
-                        }
+                    it.data.let {currentData ->
+                        if(currentData?.size!! > 0)
+                        createMultipleMarkers(currentData)
                     }
                 }
                 Status.NO_CONTENT,
@@ -98,9 +102,7 @@ class MapsFragment: BaseFragment(){
                     Timber.d("ERRO")
                 }
                 Status.LOADING -> {
-                    if (this::binding.isInitialized) {
-                        binding.loadingIndicator.start()
-                    }
+                    binding.loadingIndicator.start()
                 }
                 Status.SERVER_ERROR -> {
                     Timber.d("SERVER ERRO")
@@ -111,15 +113,16 @@ class MapsFragment: BaseFragment(){
     }
 
     private fun initView() {
-        viewModel.getStoresFromApi("-23.5411169","-46.6415725", 5)
+        viewModel.getStoresFromApi("-23.5534401","-46.7108107", 5)
+        observeViewModel()
     }
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        var lag = "-23.5411169".toDouble()
-        var lng = "-46.6415725".toDouble()
-        val locationMark = LatLng(lag, lng)
-        createMarker(googleMap, lag, lng, "Marker in Sydney", "Marker in Sydney")
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(locationMark))
+    private fun createMultipleMarkers(data: List<StoreEntity>){
+        for (i in data.indices) {
+            var doubleLag = DoubleUtils.convertStringToDouble(data[i].lat)
+            var doubleLng = DoubleUtils.convertStringToDouble(data[i].lng)
+            createMarker(gMaps, doubleLag, doubleLng,"TESTE", "TESTE")
+        }
     }
 
     private fun createMarker(
@@ -136,6 +139,14 @@ class MapsFragment: BaseFragment(){
                 .title(title)
                 .snippet(snippet)
         )
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        map.let { map ->
+            if (map != null) {
+                this.gMaps = map
+            }
+        }
     }
 
 }

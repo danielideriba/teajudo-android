@@ -61,6 +61,7 @@ object Libraries {
     const val JETPACK_FRAGMENT_NAVIGATION   = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.Jetpack.JETPACK_NAVIGATION}"
 
     const val DATABINDING                   = "com.android.databinding:compiler:${Versions.Jetpack.DATABIND}"
+    const val LOCATION_SERVICES             = "com.google.android.gms:play-services-location:${Versions.GoogleMaps.LOCATION_SERVICES}"
 
     //Room
     const val ROOM_RUNTIME                  = "androidx.room:room-runtime:${Versions.Room.ROOM}"
