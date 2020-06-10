@@ -19,27 +19,11 @@ class MapsViewholder(
 
     private lateinit var storeResult: StoreEntity
 
-//    private val binding by lazy { DataBindingUtil.bind<FragmentMapsBinding>(view) }
-
     override fun bindData(data: kotlin.Any?) {
         if (data is StoreEntity) {
             storeResult = data
-//            drawUI()
         }
     }
-
-//    private fun drawUI() {
-//        binding?.let {
-//            val viewModel = MapsDataViewModel(
-//                view.context,
-//                storeResult
-//            )
-//
-//            it.vModel = viewModel
-//
-//            it.executePendingBindings()
-//        }
-//    }
 
     override fun onClick(view: View?) {
         delegate.onMapResultClick(storeResult, itemView)

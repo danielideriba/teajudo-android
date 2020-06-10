@@ -6,4 +6,5 @@ object Constants {
     val VOLUNTEER = "volunteer"
     val STORE = "store"
     val USERTYPE = "user"
+    val DISTANCE_STORES = 10
 }
