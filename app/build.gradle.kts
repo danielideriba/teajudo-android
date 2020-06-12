@@ -98,6 +98,8 @@ dependencies {
     implementation(Libraries.MULTIDEX)
 
     implementation(Libraries.GMAPS)
+//    implementation(Libraries.GMAPS_UTILS)
+//    implementation(Libraries.GMAPS_UTILS_V3)
     implementation(Libraries.DEXTER)
 
     implementation(Libraries.LOTTIE)

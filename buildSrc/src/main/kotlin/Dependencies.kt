@@ -52,6 +52,8 @@ object Libraries {
     const val MULTIDEX                      = "com.android.support:multidex:${Versions.MULTIDEX}"
     const val ANDROIDX_LEGACY               = "androidx.legacy:legacy-support-v4:${Versions.ANDROIDX_LEGACY}"
     const val GMAPS                         = "com.google.android.gms:play-services-maps:${Versions.GoogleMaps.MAPS}"
+    const val GMAPS_UTILS                   = "com.google.maps.android:android-maps-utils:${Versions.GoogleMaps.MAPS_UTIL}"
+    const val GMAPS_UTILS_V3                = "com.google.maps.android:android-maps-utils-v3:${Versions.GoogleMaps.MAPS_UTIL}"
     const val DEXTER                        = "com.karumi:dexter:${Versions.DEXTER}"
     const val LOTTIE                        = "com.airbnb.android:lottie:${Versions.LOTTIE}"
     const val CONNECTIVITY_MODULE           = "com.github.danielideriba:VerifyConnectivityModule:${Versions.CONNECTIVITY_MODULE}"

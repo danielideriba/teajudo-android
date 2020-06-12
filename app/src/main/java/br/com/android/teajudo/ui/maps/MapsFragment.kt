@@ -15,6 +15,7 @@ import br.com.android.teajudo.R
 import br.com.android.teajudo.data.db.entities.StoreEntity
 import br.com.android.teajudo.data.remote.model.Store
 import br.com.android.teajudo.databinding.FragmentMapsBinding
+import br.com.android.teajudo.ui.maps.adapters.CustomInfoWindowGoogleMap
 import br.com.android.teajudo.utils.Constants
 import br.com.android.teajudo.utils.ResourcesUtils
 import br.com.android.teajudo.utils.ScreenUtils
@@ -36,7 +37,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdapter {
+class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -48,6 +49,8 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdap
 
     lateinit var binding: FragmentMapsBinding
     lateinit var gMaps: GoogleMap
+    lateinit var marker: Marker
+    lateinit var customInfoWindow: CustomInfoWindowGoogleMap
 
     var listOfLocations = arrayListOf<String>()
 
@@ -76,12 +79,7 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdap
 
     private fun mapFragmentConfig() {
         val supportMapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
-        supportMapFragment.getMapAsync { googleMap ->
-            googleMap.setOnInfoWindowClickListener { marker ->
-                Timber.d("lol")
-            }
-        }
-
+        supportMapFragment.getMapAsync(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,16 +124,17 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdap
         }
     }
 
-    private fun mapZoomBylatLng(lat: Double, lng: Double){
-        val latLng = LatLng(lat, lng)
-        val cameraPosition = CameraPosition.Builder()
-            .target(latLng)
-            .zoom(12f)
-            .bearing(20f)
-            .tilt(0f)
-            .build()
-        val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
-        gMaps.animateCamera(cameraUpdate)
+    private fun mapZoomBylatLng(latLng: LatLng?){
+        if(latLng != null) {
+            val cameraPosition = CameraPosition.Builder()
+                .target(latLng)
+                .zoom(12f)
+                .bearing(20f)
+                .tilt(0f)
+                .build()
+            val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+            gMaps.animateCamera(cameraUpdate)
+        }
     }
 
     private fun createMarker(
@@ -146,21 +145,36 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdap
         snippet: String?,
         icon: String
     ): Marker? {
-        return googleMap.addMarker(
-            MarkerOptions()
-                .position(LatLng(latitude, longitude))
-                .anchor(0.5f, 0.5f)
-                .title(title)
-                .snippet(snippet)
-                .icon(ResourcesUtils.mapIconBitmap(icon))
-        )
+        marker = googleMap.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(latitude, longitude))
+                            .anchor(0.5f, 0.5f)
+                            .title(title)
+                            .snippet(snippet)
+                            .icon(ResourcesUtils.mapIconBitmap(icon))
+                    )
+
+        return marker
     }
 
     override fun onMapReady(map: GoogleMap?) {
         map.let { map ->
             if (map != null) {
-                this.gMaps = map
-                context?.let { getLocation(it) }
+                gMaps = map
+                this.gMaps.setOnMapLongClickListener(this)
+                this.gMaps.isMyLocationEnabled = true
+
+                context?.let {
+                    customInfoWindow = CustomInfoWindowGoogleMap(it)
+                    gMaps.setInfoWindowAdapter(customInfoWindow)
+                    gMaps.setOnMarkerClickListener(object: GoogleMap.OnMarkerClickListener {
+                        override fun onMarkerClick(p0: Marker?): Boolean {
+                            Timber.d("---CLICK---")
+                            return true
+                        }
+                    })
+                    getLocation(it)
+                }
             }
         }
     }
@@ -168,7 +182,7 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdap
     private fun getLocation(context: Context) {
         LocationHelper().startListeningUserLocation(context, object: LocationHelper.MyLocationListener {
             override fun onLocationChanged(location: Location) {
-                mapZoomBylatLng(location.latitude, location.longitude)
+                mapZoomBylatLng(LatLng(location.latitude, location.longitude))
 
                 listOfLocations.addAll(listOf(location.latitude.toString(), location.longitude.toString()))
 
@@ -184,17 +198,8 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.InfoWindowAdap
         })
     }
 
-    override fun getInfoContents(marker: Marker?): View {
-        var mInfoView = (context as Activity).layoutInflater.inflate(R.layout.fragment_map_marker_info, null)
-        var mInfoWindow: Store? = marker?.tag as Store?
-
-        mInfoView.txtMarkerName.text = mInfoWindow?.type
-
-
-        return mInfoView
-    }
-
-    override fun getInfoWindow(p0: Marker?): View {
-        Timber.d("infoWindow")
+    override fun onMapLongClick(latLng: LatLng?) {
+        mapZoomBylatLng(latLng)
+        this.marker.showInfoWindow()
     }
 }

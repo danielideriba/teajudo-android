@@ -24,6 +24,7 @@ object Versions {
     object GoogleMaps {
         const val MAPS = "17.0.0"
         const val LOCATION_SERVICES = "17.0.0"
+        const val MAPS_UTIL = "1.3.3"
     }
 
     object Androidx {
