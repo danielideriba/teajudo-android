@@ -102,7 +102,7 @@ dependencies {
 //    implementation(Libraries.GMAPS_UTILS_V3)
     implementation(Libraries.DEXTER)
 
-    implementation(Libraries.LOTTIE)
+//    implementation(Libraries.LOTTIE)
 
     //Custom Libraries
     implementation(Libraries.CONNECTIVITY_MODULE)

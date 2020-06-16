@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieAnimationView
 import com.module.coreapps.R
 
 class LoadingIndicator : LinearLayout {
@@ -46,6 +47,7 @@ class LoadingIndicator : LinearLayout {
         inflate(context, R.layout.loading_indicator, this)
 
         val loadingIcon: ImageView = findViewById(R.id.ivLoadingIcon)
+        val lavLoading: LottieAnimationView = findViewById(R.id.lavLoading)
 
         val attributes = context.obtainStyledAttributes(
             attrs, R.styleable.LoadingIndicator, defStyle, 0

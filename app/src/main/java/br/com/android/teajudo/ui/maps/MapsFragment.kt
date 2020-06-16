@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.module.coreapps.api.Status
 import com.module.coreapps.helpers.LocationHelper
+import com.module.coreapps.helpers.LocationHelperCallback
+import com.module.coreapps.helpers.LocationHelperGoogleServices
 import com.module.coreapps.utils.DoubleUtils
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_helping.*
@@ -36,8 +38,8 @@ import kotlinx.android.synthetic.main.fragment_map_marker_info.view.*
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -51,8 +53,6 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClick
     lateinit var gMaps: GoogleMap
     lateinit var marker: Marker
     lateinit var customInfoWindow: CustomInfoWindowGoogleMap
-
-    var listOfLocations = arrayListOf<String>()
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -167,12 +167,6 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClick
                 context?.let {
                     customInfoWindow = CustomInfoWindowGoogleMap(it)
                     gMaps.setInfoWindowAdapter(customInfoWindow)
-                    gMaps.setOnMarkerClickListener(object: GoogleMap.OnMarkerClickListener {
-                        override fun onMarkerClick(p0: Marker?): Boolean {
-                            Timber.d("---CLICK---")
-                            return true
-                        }
-                    })
                     getLocation(it)
                 }
             }
@@ -180,22 +174,24 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClick
     }
 
     private fun getLocation(context: Context) {
-        LocationHelper().startListeningUserLocation(context, object: LocationHelper.MyLocationListener {
-            override fun onLocationChanged(location: Location) {
-                mapZoomBylatLng(LatLng(location.latitude, location.longitude))
+        binding.loadingIndicator.start()
 
-                listOfLocations.addAll(listOf(location.latitude.toString(), location.longitude.toString()))
-
-                if(listOfLocations.size > 0) {
-                    viewModel.getStoresFromApi(
-                        listOfLocations[0],
-                        listOfLocations[1],
-                        Constants.DISTANCE_STORES
-                    )
-                    observeViewModel()
-                }
-            }
-        })
+//        LocationHelper().startListeningUserLocation(context, object: LocationHelper.MyLocationListener {
+//            override fun onLocationChanged(location: Location) {
+//                mapZoomBylatLng(LatLng(location.latitude, location.longitude))
+//
+//                listOfLocations.addAll(listOf(location.latitude.toString(), location.longitude.toString()))
+//
+//                if(listOfLocations.size > 0) {
+//                    viewModel.getStoresFromApi(
+//                        listOfLocations[0],
+//                        listOfLocations[1],
+//                        Constants.DISTANCE_STORES
+//                    )
+//                    observeViewModel()
+//                }
+//            }
+//        })
     }
 
     override fun onMapLongClick(latLng: LatLng?) {

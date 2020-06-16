@@ -7,15 +7,14 @@
     android:background="@color/white30"
     android:gravity="center">
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:id="@+id/lavLoading"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        app:lottie_colorFilter="@color/colorPrimary"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_fileName="loading.json"-->
-<!--        app:lottie_loop="true" />-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lavLoading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loadingmap.json"
+        app:lottie_loop="true" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivLoadingIcon"

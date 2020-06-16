@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import br.com.android.teajudo.BaseActivity
 import br.com.android.teajudo.R
 import com.google.android.material.navigation.NavigationView
+import com.module.coreapps.helpers.LocationHelperGoogleServices
 import kotlinx.android.synthetic.main.activity_maps.*
 
 
@@ -26,6 +27,14 @@ class MapsActivity : BaseActivity() {
 
         val bottomNavigationView = findViewById<NavigationView>(R.id.nav_view)
         bottomNavigationView.setupWithNavController(navController)
+
+        if (savedInstanceState == null) {
+            initView(this)
+        }
+    }
+
+    private fun initView(context: Context) {
+        LocationHelperGoogleServices().initLocation(this, context)
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_main).navigateUp()

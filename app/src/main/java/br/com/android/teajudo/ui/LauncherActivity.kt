@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import br.com.android.teajudo.R
 import br.com.android.teajudo.ui.maps.MapsActivity
 import br.com.android.teajudo.ui.permissionRequests.PermissionRequestsActivity
+import br.com.android.teajudo.ui.permissionRequests.PermissionRequestsLocationActivity
 import br.com.android.teajudo.utils.Constants.SHARED_KEY
 import br.com.android.teajudo.utils.SharedPreferencesUtils
+import com.module.coreapps.helpers.LocationHelperGoogleServices
 import com.module.verifyconnectivitymodule.receivers.ConnectivityReceiver
 import com.module.verifyconnectivitymodule.ui.WarningScreenActivity
 import timber.log.Timber
@@ -49,8 +51,14 @@ class LauncherActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityR
         if (!isConnected) {
             WarningScreenActivity.start(this)
         } else {
-            if(SharedPreferencesUtils.getBooleanPreference(this, SHARED_KEY, false)){
-                MapsActivity.start(this)
+            if(SharedPreferencesUtils.getBooleanPreference(
+                    this, SHARED_KEY, false)){
+
+                if(LocationHelperGoogleServices().isLocationEnabled(this)){
+                    MapsActivity.start(this)
+                } else {
+                    PermissionRequestsLocationActivity.start(this)
+                }
             } else {
                 PermissionRequestsActivity.start(this)
             }

@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import timber.log.Timber
 
 class LocationHelper {
 

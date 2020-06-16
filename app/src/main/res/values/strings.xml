@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Te Ajudo</string>
-    <string name="requestPermission">Para utilizar o Te Ajude precisamos da permissão para utilizar a localização do seu celular</string>
+    <string name="requestPermission">Para utilizar o Te Ajude precisamos da permissão para utilizar a localização do seu celular.</string>
+    <string name="requestPermissionLocation">Agora necessitamos que habilite a localização do seu device. Nessa tela você será redirecionado para tela de configurações do seu aparelho.</string>
     <string name="allowPermissions">Conceder Permissões</string>
+    <string name="allowLocations">Habilitar Localização</string>
     <string name="maps_tab">Mapa</string>
     <string name="requests_tab">Pedidos</string>
     <string name="volunteers_tab">Voluntários</string>
