@@ -20,9 +20,8 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.module.coreapps.helpers.LocationHelperGoogleServices
+import com.module.coreapps.utils.LocationManagerUtils
 import kotlinx.android.synthetic.main.activity_permission.*
-import timber.log.Timber
 
 
 class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
@@ -47,11 +46,7 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
 
     private fun settingActions(){
         allowPermissions.setOnClickListener {
-            if(!LocationHelperGoogleServices().isLocationEnabled(this)){
-                PermissionRequestsLocationActivity.start(this)
-            } else {
-                setupPermissions()
-            }
+            setupPermissions()
         }
     }
 
@@ -72,7 +67,7 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
         report?.let {
             if(report.areAllPermissionsGranted()){
                 SharedPreferencesUtils.setBooleanPreference(this, SHARED_KEY, true)
-                if(LocationHelperGoogleServices().isLocationEnabled(this)){
+                if(LocationManagerUtils.isLocationEnabled(this)){
                     MapsActivity.start(this)
                     finish()
                 } else {
@@ -106,7 +101,6 @@ class PermissionRequestsActivity: BaseActivity(), MultiplePermissionsListener {
         if (requestCode == REQUEST_APP_SETTINGS) {
             if (hasPermissions(this, requiredPermissions)) {
                 SharedPreferencesUtils.setBooleanPreference(this, SHARED_KEY, true)
-
                 PermissionRequestsLocationActivity.start(this)
                 finish()
             } else {

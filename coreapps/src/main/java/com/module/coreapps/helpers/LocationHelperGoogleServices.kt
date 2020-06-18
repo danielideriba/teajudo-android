@@ -3,13 +3,10 @@ package com.module.coreapps.helpers
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.IntentSender
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
-import br.com.grupofleury.core.utils.DialogUtils
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.GoogleApiClient
@@ -30,18 +27,12 @@ class LocationHelperGoogleServices() : GoogleApiClient.ConnectionCallbacks,
     private val sUINTERVAL = (2 * 1000).toLong()
     private val sFINTERVAL: Long = 2000
 
+    private lateinit var context: Context
     private lateinit var activity: Activity
 
     fun initLocation(activity: Activity, context: Context) {
         this.activity = activity
-
-        if(!isLocationEnabled(context)){
-            var dialog = DialogUtils.simpleDialog(context, "Aviso", "Você será redirecionado para as configurações")
-
-            dialog.setPositiveButton("OK") { dialog, which ->
-                enableLocationSettings(activity)
-            }
-        }
+        this.context = context
 
         mGoogleApiClient = GoogleApiClient.Builder(activity).apply {
             addConnectionCallbacks(this@LocationHelperGoogleServices)
@@ -67,17 +58,6 @@ class LocationHelperGoogleServices() : GoogleApiClient.ConnectionCallbacks,
         }
         Timber.d("This device is supported.")
         return true
-    }
-
-    fun isLocationEnabled(context: Context): Boolean {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-        return locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-    }
-
-    private fun enableLocationSettings(activity: Activity) {
-        val settingsIntent =
-            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-        activity.startActivity(settingsIntent)
     }
 
     @SuppressLint("MissingPermission")

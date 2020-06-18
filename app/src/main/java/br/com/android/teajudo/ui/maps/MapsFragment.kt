@@ -1,6 +1,5 @@
 package br.com.android.teajudo.ui.maps
 
-import android.app.Activity
 import android.content.Context
 import android.location.Location
 import android.os.Bundle
@@ -13,12 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import br.com.android.teajudo.BaseFragment
 import br.com.android.teajudo.R
 import br.com.android.teajudo.data.db.entities.StoreEntity
-import br.com.android.teajudo.data.remote.model.Store
 import br.com.android.teajudo.databinding.FragmentMapsBinding
 import br.com.android.teajudo.ui.maps.adapters.CustomInfoWindowGoogleMap
 import br.com.android.teajudo.utils.Constants
 import br.com.android.teajudo.utils.ResourcesUtils
 import br.com.android.teajudo.utils.ScreenUtils
+import br.com.grupofleury.core.utils.DialogUtils
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,16 +31,19 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.module.coreapps.api.Status
 import com.module.coreapps.helpers.LocationHelper
-import com.module.coreapps.helpers.LocationHelperCallback
-import com.module.coreapps.helpers.LocationHelperGoogleServices
 import com.module.coreapps.utils.DoubleUtils
+import com.module.coreapps.utils.LocationManagerUtils
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_helping.*
-import kotlinx.android.synthetic.main.fragment_map_marker_info.view.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
+class MapsFragment: BaseFragment(),
+    OnMapReadyCallback,
+    GoogleMap.OnMapLongClickListener,
+    LocationListener,
+    GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener{
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -53,6 +58,16 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClick
     lateinit var gMaps: GoogleMap
     lateinit var marker: Marker
     lateinit var customInfoWindow: CustomInfoWindowGoogleMap
+    var listOfLocations = arrayListOf<String>()
+
+    private lateinit var googleApiClient: GoogleApiClient
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
+
+    private val UPDATE_INTERVAL: Long = 50000
+    private val FASTEST_INTERVAL: Long = 50000
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -72,9 +87,52 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClick
                     false
                 )
 
+        context?.let { setupLocations(it) }
         mapFragmentConfig()
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        googleApiClient.connect()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        googleApiClient.disconnect()
+    }
+
+    private fun setupLocations(context: Context){
+        if(LocationManagerUtils.isLocationEnabled(context)){
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+            locationRequest = LocationRequest()
+            locationRequest.interval = UPDATE_INTERVAL
+            locationRequest.fastestInterval = FASTEST_INTERVAL
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+            locationCallback = object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult?) {
+                    locationResult ?: return
+                    if (locationResult.locations.isNotEmpty()) {
+//                        val location = locationResult.lastLocation
+                        getLocation(locationResult.lastLocation)
+                    }
+                }
+            }
+
+            googleApiClient = GoogleApiClient.Builder(context)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build()
+        } else {
+            var dialog = DialogUtils.simpleDialog(context, "ATENCAO", "ERRO")
+            dialog.setPositiveButton("OK") { dialog, which ->
+                Timber.d("Ok, we change the app background.")
+            }
+            dialog.create()
+        }
     }
 
     private fun mapFragmentConfig() {
@@ -167,35 +225,70 @@ class MapsFragment: BaseFragment(), OnMapReadyCallback, GoogleMap.OnMapLongClick
                 context?.let {
                     customInfoWindow = CustomInfoWindowGoogleMap(it)
                     gMaps.setInfoWindowAdapter(customInfoWindow)
-                    getLocation(it)
                 }
             }
         }
     }
 
-    private fun getLocation(context: Context) {
+    private fun getLocation(location: Location?) {
         binding.loadingIndicator.start()
 
-//        LocationHelper().startListeningUserLocation(context, object: LocationHelper.MyLocationListener {
-//            override fun onLocationChanged(location: Location) {
-//                mapZoomBylatLng(LatLng(location.latitude, location.longitude))
-//
-//                listOfLocations.addAll(listOf(location.latitude.toString(), location.longitude.toString()))
-//
-//                if(listOfLocations.size > 0) {
-//                    viewModel.getStoresFromApi(
-//                        listOfLocations[0],
-//                        listOfLocations[1],
-//                        Constants.DISTANCE_STORES
-//                    )
-//                    observeViewModel()
-//                }
-//            }
-//        })
+        location?.let {
+            mapZoomBylatLng(LatLng(it.latitude, it.longitude))
+
+            listOfLocations.addAll(
+                listOf(
+                    it.latitude.toString(),
+                    it.longitude.toString()
+                )
+            )
+
+            if (listOfLocations.size > 0) {
+                viewModel.getStoresFromApi(
+                    listOfLocations[0],
+                    listOfLocations[1],
+                    Constants.DISTANCE_STORES
+                )
+                observeViewModel()
+            }
+        }
     }
 
     override fun onMapLongClick(latLng: LatLng?) {
         mapZoomBylatLng(latLng)
         this.marker.showInfoWindow()
     }
+
+    override fun onLocationChanged(location: Location?) {
+        Timber.d("--LAT--"+location?.latitude)
+        Timber.d("--LNG--"+location?.longitude)
+        getLocation(location)
+    }
+
+    override fun onConnected(bundle: Bundle?) {
+        context?.let {
+            startLocationUpdates(it)
+        }
+    }
+
+    override fun onConnectionSuspended(int: Int) {}
+
+    override fun onConnectionFailed(connectionResult: ConnectionResult) {
+        Timber.d("Connection Failed--"+connectionResult.toString())
+    }
+
+    private fun startLocationUpdates(context: Context) {
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            null /* Looper */
+        )
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, null)
+    }
+
+    private fun stopLocationUpdates(context: Context) {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
 }

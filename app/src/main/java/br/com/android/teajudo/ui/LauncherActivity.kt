@@ -11,10 +11,9 @@ import br.com.android.teajudo.ui.permissionRequests.PermissionRequestsActivity
 import br.com.android.teajudo.ui.permissionRequests.PermissionRequestsLocationActivity
 import br.com.android.teajudo.utils.Constants.SHARED_KEY
 import br.com.android.teajudo.utils.SharedPreferencesUtils
-import com.module.coreapps.helpers.LocationHelperGoogleServices
+import com.module.coreapps.utils.LocationManagerUtils
 import com.module.verifyconnectivitymodule.receivers.ConnectivityReceiver
 import com.module.verifyconnectivitymodule.ui.WarningScreenActivity
-import timber.log.Timber
 
 
 class LauncherActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
@@ -53,8 +52,7 @@ class LauncherActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityR
         } else {
             if(SharedPreferencesUtils.getBooleanPreference(
                     this, SHARED_KEY, false)){
-
-                if(LocationHelperGoogleServices().isLocationEnabled(this)){
+                if(LocationManagerUtils.isLocationEnabled(this)){
                     MapsActivity.start(this)
                 } else {
                     PermissionRequestsLocationActivity.start(this)

@@ -12,24 +12,30 @@ import br.com.android.teajudo.ui.maps.MapsActivity
 import br.com.android.teajudo.utils.Constants.REQUEST_APP_SETTINGS_LOCATION
 import br.com.android.teajudo.utils.Constants.SHARED_KEY_LOCATION
 import br.com.android.teajudo.utils.SharedPreferencesUtils
+import br.com.grupofleury.core.utils.DialogUtils
+import com.module.coreapps.utils.LocationManagerUtils
+import kotlinx.android.synthetic.main.activity_permission_location.*
 
 class PermissionRequestsLocationActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission_location)
 
-        if(isLocationEnabled(this)){
+        if(LocationManagerUtils.isLocationEnabled(this)) {
             MapsActivity.start(this)
             finish()
         }
+
+        setupButtons()
     }
 
-    private fun isLocationEnabled(context: Context): Boolean {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-        return locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER)
+    private fun setupButtons(){
+        allowLocations.setOnClickListener {
+            enableLocationSettings()
+        }
     }
 
+    //Move to LocationManagerUtils
     private fun enableLocationSettings() {
         val settingsIntent =
             Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
@@ -39,7 +45,7 @@ class PermissionRequestsLocationActivity: BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_APP_SETTINGS_LOCATION) {
-            if (isLocationEnabled(this)) {
+            if (LocationManagerUtils.isLocationEnabled(this)) {
                 SharedPreferencesUtils.setBooleanPreference(this, SHARED_KEY_LOCATION, true)
                 MapsActivity.start(this)
                 finish()
