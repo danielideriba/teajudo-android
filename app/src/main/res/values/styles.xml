@@ -33,4 +33,34 @@
         <item name="android:layout_gravity">bottom</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
+
+    <style name="AppTheme.MarkerInfo">
+        <item name="android:layout_margin">@dimen/font_16</item>
+        <item name="android:background">@color/white_ffffff</item>
+        <item name="android:paddingStart">@dimen/font_16</item>
+        <item name="android:paddingLeft">@dimen/font_16</item>
+        <item name="android:paddingEnd">@dimen/font_16</item>
+        <item name="android:paddingRight">@dimen/font_16</item>
+    </style>
+
+    <style name="AppTheme.MarkerInfoTextView">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/black_000000</item>
+    </style>
+
+    <style name="AppTheme.TextViewStyle">
+        <item name="android:background">@color/blue_0099DE</item>
+        <item name="android:textColor">@color/white_ffffff</item>
+        <item name="android:textSize">@dimen/font_18</item>
+        <item name="android:paddingTop">@dimen/size_5</item>
+        <item name="android:paddingBottom">@dimen/size_5</item>
+        <item name="android:paddingLeft">@dimen/size_12</item>
+        <item name="android:paddingRight">@dimen/size_12</item>
+    </style>
+
+    <style name="AppTheme.MaterialButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="backgroundTint">@color/color_states_materialbutton</item>
+    </style>
+
 </resources>

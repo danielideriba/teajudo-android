@@ -11,5 +11,5 @@ interface StoreDetailsDao : BaseDao<StoreDetailsEntity> {
     @Query("SELECT * FROM StoreDetails WHERE idStoreDetails = :id")
     fun getStoreById(
         id: Int
-    ): LiveData<StoreDetailsEntity>
+    ): LiveData<List<StoreDetailsEntity>>
 }

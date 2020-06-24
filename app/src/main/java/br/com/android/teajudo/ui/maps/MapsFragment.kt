@@ -30,11 +30,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.module.coreapps.api.Status
-import com.module.coreapps.helpers.LocationHelper
 import com.module.coreapps.utils.DoubleUtils
 import com.module.coreapps.utils.LocationManagerUtils
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_helping.*
+import kotlinx.android.synthetic.main.fragment_helping.linearLayoutBackground
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,7 +42,7 @@ class MapsFragment: BaseFragment(),
     GoogleMap.OnMapLongClickListener,
     LocationListener,
     GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener{
+    GoogleApiClient.OnConnectionFailedListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -64,8 +63,8 @@ class MapsFragment: BaseFragment(),
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
 
-    private val UPDATE_INTERVAL: Long = 50000
-    private val FASTEST_INTERVAL: Long = 50000
+    private val UPDATE_INTERVAL: Long = 10000
+    private val FASTEST_INTERVAL: Long = 5000
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -109,13 +108,13 @@ class MapsFragment: BaseFragment(),
             locationRequest = LocationRequest()
             locationRequest.interval = UPDATE_INTERVAL
             locationRequest.fastestInterval = FASTEST_INTERVAL
+            locationRequest.smallestDisplacement = 170f
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     locationResult ?: return
                     if (locationResult.locations.isNotEmpty()) {
-//                        val location = locationResult.lastLocation
                         getLocation(locationResult.lastLocation)
                     }
                 }
@@ -178,7 +177,7 @@ class MapsFragment: BaseFragment(),
         for (i in data.indices) {
             var doubleLag = DoubleUtils.convertStringToDouble(data[i].lat)
             var doubleLng = DoubleUtils.convertStringToDouble(data[i].lng)
-            createMarker(gMaps, doubleLag, doubleLng, data[i].name, data[i].email, data[i].type)
+            createMarker(gMaps, doubleLag, doubleLng, data[i].type, data[i])
         }
     }
 
@@ -199,18 +198,17 @@ class MapsFragment: BaseFragment(),
         googleMap: GoogleMap,
         latitude: Double,
         longitude: Double,
-        title: String?,
-        snippet: String?,
-        icon: String
+        icon: String,
+        tagDescrition: StoreEntity
     ): Marker? {
         marker = googleMap.addMarker(
                         MarkerOptions()
                             .position(LatLng(latitude, longitude))
                             .anchor(0.5f, 0.5f)
-                            .title(title)
-                            .snippet(snippet)
                             .icon(ResourcesUtils.mapIconBitmap(icon))
                     )
+
+        marker.tag = tagDescrition
 
         return marker
     }
@@ -219,15 +217,40 @@ class MapsFragment: BaseFragment(),
         map.let { map ->
             if (map != null) {
                 gMaps = map
+
                 this.gMaps.setOnMapLongClickListener(this)
                 this.gMaps.isMyLocationEnabled = true
 
                 context?.let {
                     customInfoWindow = CustomInfoWindowGoogleMap(it)
                     gMaps.setInfoWindowAdapter(customInfoWindow)
+
+                    gMaps.setOnInfoWindowClickListener { marker ->
+                        if(marker.isInfoWindowShown){
+                            var currentTag = marker.tag as StoreEntity
+                            getStoreByIdAndSendTo(it, currentTag, marker)
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private fun getStoreByIdAndSendTo(
+        context: Context,
+        tag: StoreEntity,
+        marker: Marker
+    ) {
+        viewModel.getStoreDetails(tag.idStore)
+
+        viewModel.storeByIdLiveData.observe(
+            viewLifecycleOwner,
+            Observer {
+                if(it.size > 0 && marker.isInfoWindowShown) {
+                    marker.hideInfoWindow()
+                    MapInfoStoreDetail.start(context, tag, it[0])
+                }
+        })
     }
 
     private fun getLocation(location: Location?) {
@@ -249,6 +272,7 @@ class MapsFragment: BaseFragment(),
                     listOfLocations[1],
                     Constants.DISTANCE_STORES
                 )
+
                 observeViewModel()
             }
         }
@@ -260,8 +284,6 @@ class MapsFragment: BaseFragment(),
     }
 
     override fun onLocationChanged(location: Location?) {
-        Timber.d("--LAT--"+location?.latitude)
-        Timber.d("--LNG--"+location?.longitude)
         getLocation(location)
     }
 
@@ -270,6 +292,13 @@ class MapsFragment: BaseFragment(),
             startLocationUpdates(it)
         }
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        if(marker.isInfoWindowShown){
+//            marker.hideInfoWindow()
+//        }
+//    }
 
     override fun onConnectionSuspended(int: Int) {}
 
@@ -290,5 +319,4 @@ class MapsFragment: BaseFragment(),
     private fun stopLocationUpdates(context: Context) {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
-
 }

@@ -30,6 +30,13 @@ class MapsRepository @Inject constructor(
     private val rateLimiter = RateLimiter<String>(1, TimeUnit.HOURS)
 
     fun getStores(lat: String, lng: String) = dao.getStores()
+    fun getStoresDetails(idStore: Int) = daoDetails.getStoreById(idStore)
+
+    fun doStoresDetails(
+        idStore: Int
+    ): LiveData<List<StoreDetailsEntity>> {
+        return daoDetails.getStoreById(idStore)
+    }
 
     fun doStores(
         lat: String,

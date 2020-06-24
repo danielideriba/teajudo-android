@@ -8,4 +8,15 @@
     <string name="requests_tab">Pedidos</string>
     <string name="volunteers_tab">Voluntários</string>
     <string name="local_business_tab">Negócios</string>
+    <string name="volunteers_title">Voluntário(a)</string>
+    <string name="name_title">Voluntário(a)</string>
+    <string name="contact_with_title">Fale comigo por</string>
+    <string name="email_button">E-mail</string>
+    <string name="phone_button">Telefone</string>
+    <string name="whatsapp_button">Whatsapp</string>
+    <string name="shopping_title">Compras</string>
+    <string name="food_title">Alimentação</string>
+    <string name="farmacy_title">Farmácia</string>
+    <string name="enable_conversation">Posso conversar</string>
+    <string name="help_user_title">Posso ajudar como?</string>
 </resources>

@@ -4,98 +4,95 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:background="@color/white_ffffff"
-    android:paddingStart="16dp"
-    android:paddingLeft="16dp"
-    android:paddingEnd="16dp"
-    android:paddingRight="16dp">
+    style="@style/AppTheme.MarkerInfo">
 
     <TextView
+        style="@style/AppTheme.MarkerInfoTextView"
         android:id="@+id/txtMarkerType"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
         android:textSize="@dimen/font_16"
+        android:text="@string/volunteers_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tool:text="Voluntário(a)" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/AppTheme.MarkerInfoTextView"
         android:id="@+id/txtMarkerName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center_horizontal"
+        android:text="@string/name_title"
         android:textSize="@dimen/font_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMarkerType"
-        tool:text="Luciane" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMarkerType" />
 
     <TextView
+        style="@style/AppTheme.MarkerInfoTextView"
         android:id="@+id/textView2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center_horizontal"
         android:textSize="@dimen/font_16"
+        android:text="@string/contact_with_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMarkerName"
-        tool:text="Fale comigo por" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMarkerName" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+    <TextView
+        style="@style/AppTheme.TextViewStyle"
+        android:id="@+id/emailButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:text="Email"
-        app:layout_constraintEnd_toStartOf="@+id/materialButton3"
+        android:text="@string/email_button"
+        app:layout_constraintEnd_toStartOf="@+id/whatsappButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton2"
+    <TextView
+        style="@style/AppTheme.TextViewStyle"
+        android:id="@+id/phoneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Telefone"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/phone_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/materialButton3"
-        app:layout_constraintTop_toTopOf="@+id/materialButton3" />
+        app:layout_constraintStart_toEndOf="@+id/whatsappButton"
+        app:layout_constraintTop_toTopOf="@+id/whatsappButton" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton3"
+    <TextView
+        style="@style/AppTheme.TextViewStyle"
+        android:id="@+id/whatsappButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:text="Whatsapp"
-        app:layout_constraintEnd_toStartOf="@+id/materialButton2"
+        android:text="@string/whatsapp_button"
+        app:layout_constraintEnd_toStartOf="@+id/phoneButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/materialButton"
-        app:layout_constraintTop_toTopOf="@+id/materialButton" />
+        app:layout_constraintStart_toEndOf="@+id/emailButton"
+        app:layout_constraintTop_toTopOf="@+id/emailButton" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center_horizontal"
+        android:textColor="@color/black_000000"
         android:textSize="@dimen/font_16"
+        android:text="@string/help_user_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialButton"
-        tool:text="Posso ajudar como?" />
+        app:layout_constraintTop_toBottomOf="@+id/emailButton" />
 
     <TextView
         android:id="@+id/textView4"
@@ -106,7 +103,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/roboto_bold"
         android:padding="5dp"
-        android:text="Compras"
+        android:text="@string/shopping_title"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +117,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/roboto_bold"
         android:padding="5dp"
-        android:text="Alimentação"
+        android:text="@string/food_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -135,7 +132,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/roboto_bold"
         android:padding="5dp"
-        android:text="Farmácia"
+        android:text="@string/farmacy_title"
         app:layout_constraintEnd_toStartOf="@+id/textView8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,9 +146,24 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/roboto_bold"
         android:padding="5dp"
-        android:text="Posso conversar"
+        android:text="@string/enable_conversation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+    <TextView
+        style="@style/AppTheme.MarkerInfoTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:drawableRight="@drawable/arrow_right_black_18"
+        android:gravity="center"
+        android:text="Ver detalhes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

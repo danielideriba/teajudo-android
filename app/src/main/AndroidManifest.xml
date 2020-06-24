@@ -44,6 +44,10 @@
         </activity>
         <activity
             android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.maps.MapInfoStoreDetail">
+        </activity>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.business.BusinessActivity">
         </activity>
         <activity
