@@ -11,5 +11,5 @@ interface AvailableDao : BaseDao<AvailableEntity> {
     @Query("SELECT * FROM Available WHERE idAvailable = :id")
     fun getStoreAvailable(
         id: Int
-    ): LiveData<AvailableEntity>
+    ): LiveData<List<AvailableEntity>>
 }

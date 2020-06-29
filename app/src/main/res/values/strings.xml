@@ -8,7 +8,6 @@
     <string name="requests_tab">Pedidos</string>
     <string name="volunteers_tab">Voluntários</string>
     <string name="local_business_tab">Negócios</string>
-    <string name="volunteers_title">Voluntário(a)</string>
     <string name="name_title">Voluntário(a)</string>
     <string name="contact_with_title">Fale comigo por</string>
     <string name="email_button">E-mail</string>
@@ -18,5 +17,16 @@
     <string name="food_title">Alimentação</string>
     <string name="farmacy_title">Farmácia</string>
     <string name="enable_conversation">Posso conversar</string>
+    <string name="enable_dog">Passear com o dog</string>
+    <string name="enable_delivery">Fazemos entregas</string>
     <string name="help_user_title">Posso ajudar como?</string>
+    <string name="email_subject">Te ajudo contato</string>
+    <string name="email_body">"Olá \n Gostaria de entrar em contato com você...</string>
+    <string name="email_chooser_title">Enviar email</string>
+
+    <string name="volunteers_title">Voluntário(a)</string>
+    <string name="local_business_title">Pequeno Negócio</string>
+    <string name="user_title">Solicitante</string>
+    <string name="type_not_found">Não definido</string>
+
 </resources>

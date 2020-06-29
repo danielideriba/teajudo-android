@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/whatsapp_button"
-            app:layout_constraintEnd_toStartOf="@+id/phoneButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/emailButton"
             app:layout_constraintTop_toTopOf="@+id/emailButton" />
@@ -81,29 +81,29 @@
             style="@style/AppTheme.TextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:text="@string/email_button"
             app:layout_constraintEnd_toStartOf="@+id/whatsappButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintStart_toEndOf="@+id/phoneButton"
+            app:layout_constraintTop_toTopOf="@+id/phoneButton" />
 
         <TextView
             android:id="@+id/phoneButton"
             style="@style/AppTheme.TextViewStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginTop="15dp"
             android:text="@string/phone_button"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/emailButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/whatsappButton"
-            app:layout_constraintTop_toTopOf="@+id/whatsappButton" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="100dp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center_horizontal"
             android:text="@string/help_user_title"
@@ -111,7 +111,7 @@
             android:textSize="@dimen/font_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailButton" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/shopping_item"
@@ -160,14 +160,44 @@
             android:id="@+id/conversation_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="75dp"
             android:drawableLeft="@drawable/icon_chat"
             android:drawablePadding="10dp"
             android:fontFamily="@font/roboto_bold"
             android:padding="5dp"
             android:text="@string/enable_conversation"
+            app:layout_constraintEnd_toStartOf="@+id/dog_item"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/dog_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/icon_dog"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/roboto_bold"
+            android:padding="5dp"
+            android:text="@string/enable_dog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/conversation_item"
+            app:layout_constraintTop_toTopOf="@+id/conversation_item" />
+
+        <TextView
+            android:id="@+id/delivery_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:drawableLeft="@drawable/icon_delivery"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/roboto_bold"
+            android:padding="5dp"
+            android:text="@string/enable_delivery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shopping_item" />
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

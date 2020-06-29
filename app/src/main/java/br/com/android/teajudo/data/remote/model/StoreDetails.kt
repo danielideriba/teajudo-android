@@ -12,5 +12,6 @@ data class StoreDetails(
     @SerializedName("food") val food: Boolean? = false,
     @SerializedName("talk") val talk: Boolean? = false,
     @SerializedName("health") val health: Boolean? = false,
-    @SerializedName("market") val market: Boolean? = false
+    @SerializedName("market") val market: Boolean? = false,
+    @SerializedName("dog") val dog: Boolean? = false
 )

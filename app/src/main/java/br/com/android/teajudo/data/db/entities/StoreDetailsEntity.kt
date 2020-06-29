@@ -20,7 +20,8 @@ data class StoreDetailsEntity(
     @SerializedName("talk") val talk: Boolean? = false,
     @SerializedName("market") val market: Boolean? = false,
     @SerializedName("health") val health: Boolean? = false,
-    @SerializedName("others") val others: String? = ""
+    @SerializedName("others") val others: String? = "",
+    @SerializedName("dog") val dog: Boolean? = false
 ) : BaseEntity(), Parcelable {
     companion object {
         const val TABLE_NAME = "StoreDetails"

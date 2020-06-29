@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import br.com.android.teajudo.data.MapsRepository
+import br.com.android.teajudo.data.db.entities.AvailableEntity
 import br.com.android.teajudo.data.db.entities.StoreDetailsEntity
 import br.com.android.teajudo.data.db.entities.StoreEntity
 import com.module.coreapps.api.Resource
@@ -15,6 +16,7 @@ class MapsViewModel @Inject constructor(
 ) : ViewModel() {
     var storeLiveData: LiveData<Resource<List<StoreEntity>>> = MutableLiveData()
     var storeByIdLiveData: LiveData<List<StoreDetailsEntity>> = MutableLiveData()
+    var availableByIdLiveData: LiveData<List<AvailableEntity>> = MutableLiveData()
 
     private var lat: String = ""
     private var lng: String = ""
@@ -41,6 +43,10 @@ class MapsViewModel @Inject constructor(
 
     fun getStoreDetails(idStore: Int){
         storeByIdLiveData = mapsRepository.doStoresDetails(idStore)
+    }
+
+    fun getAvailable(idStore: Int){
+        availableByIdLiveData = mapsRepository.doStoreAvailable(idStore)
     }
 
     fun getStoresFromApi(lat: String, lng: String, distance: Int){

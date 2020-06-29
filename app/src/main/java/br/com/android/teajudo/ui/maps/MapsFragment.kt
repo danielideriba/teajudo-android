@@ -7,11 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import br.com.android.teajudo.BaseFragment
 import br.com.android.teajudo.R
+import br.com.android.teajudo.data.db.entities.AvailableEntity
+import br.com.android.teajudo.data.db.entities.StoreDetailsEntity
 import br.com.android.teajudo.data.db.entities.StoreEntity
+import br.com.android.teajudo.data.remote.model.Store
+import br.com.android.teajudo.data.remote.model.StoreDetails
 import br.com.android.teajudo.databinding.FragmentMapsBinding
 import br.com.android.teajudo.ui.maps.adapters.CustomInfoWindowGoogleMap
 import br.com.android.teajudo.utils.Constants
@@ -33,7 +38,7 @@ import com.module.coreapps.api.Status
 import com.module.coreapps.utils.DoubleUtils
 import com.module.coreapps.utils.LocationManagerUtils
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_helping.linearLayoutBackground
+import kotlinx.android.synthetic.main.fragment_helping.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -217,7 +222,6 @@ class MapsFragment: BaseFragment(),
         map.let { map ->
             if (map != null) {
                 gMaps = map
-
                 this.gMaps.setOnMapLongClickListener(this)
                 this.gMaps.isMyLocationEnabled = true
 
@@ -236,19 +240,32 @@ class MapsFragment: BaseFragment(),
         }
     }
 
+    // I should fix that functionality =/
     private fun getStoreByIdAndSendTo(
         context: Context,
         tag: StoreEntity,
         marker: Marker
     ) {
         viewModel.getStoreDetails(tag.idStore)
+        viewModel.getAvailable(tag.idStore)
 
         viewModel.storeByIdLiveData.observe(
             viewLifecycleOwner,
-            Observer {
-                if(it.size > 0 && marker.isInfoWindowShown) {
-                    marker.hideInfoWindow()
-                    MapInfoStoreDetail.start(context, tag, it[0])
+            Observer { storeById ->
+                if(storeById.size > 0 && marker.isInfoWindowShown) {
+                    viewModel.availableByIdLiveData.observe(
+                        viewLifecycleOwner,
+                        Observer { availableById ->
+                            var availableEntity: AvailableEntity = if(availableById.isNotEmpty()) {
+                                    availableById[0]
+                                } else  {
+                                    AvailableEntity(0, "", false, false)
+                                }
+
+                            marker.hideInfoWindow()
+                            MapInfoStoreDetail.start(context, tag, storeById[0], availableEntity)
+                        }
+                    )
                 }
         })
     }
@@ -292,13 +309,6 @@ class MapsFragment: BaseFragment(),
             startLocationUpdates(it)
         }
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        if(marker.isInfoWindowShown){
-//            marker.hideInfoWindow()
-//        }
-//    }
 
     override fun onConnectionSuspended(int: Int) {}
 
